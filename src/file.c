@@ -27,7 +27,7 @@ char *read_file (const char *path) {
             continue;
         }
 
-        if (capacity == count_sym) {
+        if (capacity - 1 <= count_sym) {
             capacity *= 2;
 
             char *temp = realloc(data, capacity);

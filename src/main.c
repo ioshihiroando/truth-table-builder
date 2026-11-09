@@ -1,17 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "file.h"
-
-/*
-! - Инверсия
-| - Дизъюнкция
-& - Конъюнкция
-^ - Сложение по модулю 2 (xor)
-= - Эквивалентность
-> - Импликация
-< - Коимпликация
-# - Стрелка Пирса
-/ - Штрих Шеффера
-*/
+#include "rpn-parser.h"
 
 int main(int argc, char *argv[]) {
     /*
@@ -30,7 +20,17 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    printf("%s", formula);
+    RPN rpn = parse_formula(formula);
 
+    if (rpn.data == NULL) {
+        printf("Ошибка составления RPN\n");
+        free(formula);
+        return 1;
+    }
+
+    printf("%s\n", formula);
+    printf("%s\n", rpn.data);
+    free(rpn.data);
+    free(formula);
     return 0;
 }
