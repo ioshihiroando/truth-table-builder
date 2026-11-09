@@ -1,2 +1,16 @@
 *.pdf
+
+# Executable files
+*.exe
+*.o
+
+# Debug files
+*.pdb
+
+# VS Code
 .vscode/
+
+# Temporary files
+*.tmp
+
+input.txt
