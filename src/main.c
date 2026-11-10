@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stddef.h>
 #include "file.h"
 #include "rpn-parser.h"
+#include "variables.h"
 
 int main(int argc, char *argv[]) {
     /*
@@ -28,8 +30,14 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    char variables[26] = {0};
+    size_t var_count = find_variables(formula, variables);
+
     printf("%s\n", formula);
     printf("%s\n", rpn.data);
+    printf("%s\n", variables);
+    printf("%zu\n", var_count);
+
     free(rpn.data);
     free(formula);
     return 0;
