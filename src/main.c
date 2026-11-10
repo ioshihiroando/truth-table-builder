@@ -4,6 +4,13 @@
 #include "file.h"
 #include "rpn-parser.h"
 #include "variables.h"
+#include "evaluator.h"
+
+#define BLUE "\033[34m"
+#define ORANGE "\033[38;5;208m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define RESET "\033[0m"
 
 int main(int argc, char *argv[]) {
     /*
@@ -22,6 +29,8 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    printf("\nФормула: %s\n\n", formula);
+
     RPN rpn = parse_formula(formula);
 
     if (rpn.data == NULL) {
@@ -33,10 +42,48 @@ int main(int argc, char *argv[]) {
     char variables[26] = {0};
     size_t var_count = find_variables(formula, variables);
 
-    printf("%s\n", formula);
-    printf("%s\n", rpn.data);
-    printf("%s\n", variables);
-    printf("%zu\n", var_count);
+    for (size_t i = 0; i < var_count; i++) {
+        printf("|" BLUE " %c " RESET, variables[i]);
+    }
+
+    printf("|" ORANGE " result " RESET "|\n");
+
+    for (size_t i = 0; i < var_count; i++) {
+        printf("|---");
+    }
+
+    printf("|--------|\n");
+
+    int values[26];
+    size_t combinations_count = (size_t) 1 << var_count;
+
+    for (size_t i = 0; i < combinations_count; i++) {
+        for (size_t j = 0; j < var_count; j++) {
+            values[j] = (i >> (var_count - j - 1)) & 1;
+            if (values[j] == 0) {
+                printf("|" RED " 0 " RESET);
+            } else {
+                printf("|" GREEN " 1 " RESET);
+            }
+        }
+
+        int result;
+
+        if (evaluate_rpn(&rpn, variables, var_count, values, &result)) {
+            printf("Ошибка вычисления\n");
+            free(rpn.data);
+            free(formula);
+            return 1;
+        }
+
+        if (result == 0) {
+            printf("|" RED " 0      " RESET "|\n");
+        } else if (result == 1) {
+            printf("|" GREEN " 1      " RESET "|\n");
+        }
+        
+    }
+    printf("\n");
 
     free(rpn.data);
     free(formula);
