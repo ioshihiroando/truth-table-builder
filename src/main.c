@@ -29,7 +29,25 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    printf("\nФормула: %s\n\n", formula);
+    printf("Формула: ");
+    for (size_t i = 0; formula[i] != '\0'; i++) {
+        if (formula[i] >= 'A' && formula[i] <= 'Z') {
+            printf(BLUE "%c", formula[i]);
+        }
+
+        else if (formula[i] == '(' || formula[i] == ')') {
+            printf(GREEN "%c", formula[i]);
+        }
+
+        else if (formula[i] == '!') {
+            printf(RED "%c", formula[i]);
+        }
+
+        else {
+            printf(ORANGE "%c", formula[i]);
+        }
+    }
+    printf(RESET "\n\n");
 
     RPN rpn = parse_formula(formula);
 
