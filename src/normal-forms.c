@@ -6,7 +6,7 @@
 void print_sdnf(const TruthTable *table) {
     size_t last_1 = check_sdnf(table);
     if (last_1 == 0) {
-        printf("Функция тождественно равна 0: невозможно построить СДНФ.\n");
+        printf("Функция тождественно равна 0: невозможно построить СДНФ.\n\n");
         return;
     }
 
@@ -50,7 +50,7 @@ size_t check_sdnf(const TruthTable *table) {
 void print_sknf(const TruthTable *table) {
     size_t last_0 = check_sknf(table);
     if (last_0 == 0) {
-        printf("Функция тождественно равна 1: невозможно построить СКНФ.\n");
+        printf("Функция тождественно равна 1: невозможно построить СКНФ.\n\n");
         return;
     }
 

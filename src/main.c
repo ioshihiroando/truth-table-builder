@@ -7,6 +7,7 @@
 #include "evaluator.h"
 #include "truth-table.h"
 #include "normal-forms.h"
+#include "fictitious-variables.h"
 
 int main(int argc, char *argv[]) {
     /*
@@ -52,8 +53,29 @@ int main(int argc, char *argv[]) {
 
     print_truth_table(&table, formula);
 
+    if (var_count == 0) {
+        printf("Формула не содержит переменные, невозможно построить СДНФ и СКНФ.\n");
+        free(table.results);
+        free(rpn.data);
+        free(formula);
+        return 0;
+    }
+
     print_sdnf(&table);
     print_sknf(&table);
+
+    int fictititons_variables[26]; 
+    size_t last_fictitious_variable = find_fictitious_variables(&table, fictititons_variables);
+    
+    if (last_fictitious_variable) {
+        print_fictitious_variables(
+            &table,
+            fictititons_variables,
+            last_fictitious_variable
+        );
+    } else {
+        printf("Фиктивных переменных нет.\n\n");
+    }
 
     free(table.results);
     free(rpn.data);
