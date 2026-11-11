@@ -6,6 +6,7 @@
 #include "variables.h"
 #include "evaluator.h"
 #include "truth-table.h"
+#include "normal-forms.h"
 
 int main(int argc, char *argv[]) {
     /*
@@ -50,6 +51,9 @@ int main(int argc, char *argv[]) {
     }
 
     print_truth_table(&table, formula);
+
+    print_sdnf(&table);
+    print_sknf(&table);
 
     free(table.results);
     free(rpn.data);

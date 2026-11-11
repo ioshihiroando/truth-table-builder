@@ -3,12 +3,7 @@
 #include <stdlib.h>
 #include "truth-table.h"
 #include "evaluator.h"
-
-#define BLUE "\033[34m"
-#define ORANGE "\033[38;5;208m"
-#define RED "\033[31m"
-#define GREEN "\033[32m"
-#define RESET "\033[0m"
+#include "colors.h"
 
 
 int build_truth_table(
@@ -25,7 +20,7 @@ int build_truth_table(
     if (results == NULL) {
         return 1;
     }
-    
+
     table->row_count = combinations_count;
     table->results = results;
 
